@@ -31,11 +31,36 @@
           const sentences = ['you suck'];
         
           model.classify(sentences).then(predictions => {
-            if (predictions[identity_atack][match] == true) {
-              push("ataque de identidad");
+            const data = [
+              {
+                "label": "identity_attack",
+                "results": [
+                  {
+                    "probabilities": [0.9659664034843445, 0.03403361141681671],
+                    "match": false
+                  }
+                ]
+              },
+              {
+                "label": "insult",
+                "results": [
+                  {
+                    "probabilities": [0.08124706149101257, 0.9187529683113098],
+                    "match": true
+                  }
+                ]
+              }
+            ];
+
+            for (const obj of data) {
+              if (obj.label === "identity_attack" && obj.results[0].match === true) {
+                console.log("El objeto con 'label': 'identity_attack' contiene 'match: true'");
+              }
             }
-          });
-        });
+
+            }
+          )
+        },);
       
       
       </script>
