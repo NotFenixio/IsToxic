@@ -24,44 +24,46 @@
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
       Enter the text you want to analize bellow...
       <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="i.e.: You suck."></textarea>
+      <button type="button" onclick="run()">Click Me!</button>
       <script>
-        const threshold = 0.9;
+        function run() {
+          const threshold = 0.9;
 
-        toxicity.load(threshold).then(model => {
-          const sentences = ['you suck'];
-        
-          model.classify(sentences).then(predictions => {
-            const data = [
-              {
-                "label": "identity_attack",
-                "results": [
-                  {
-                    "probabilities": [0.9659664034843445, 0.03403361141681671],
-                    "match": false
-                  }
-                ]
-              },
-              {
-                "label": "insult",
-                "results": [
-                  {
-                    "probabilities": [0.08124706149101257, 0.9187529683113098],
-                    "match": true
-                  }
-                ]
+          toxicity.load(threshold).then(model => {
+            const sentences = ['you suck'];
+            console.log(predictions);
+            model.classify(sentences).then(predictions => {
+              const data = [
+                {
+                  "label": "identity_attack",
+                  "results": [
+                    {
+                      "probabilities": [0.9659664034843445, 0.03403361141681671],
+                      "match": false
+                    }
+                  ]
+                },
+                {
+                  "label": "insult",
+                  "results": [
+                    {
+                      "probabilities": [0.08124706149101257, 0.9187529683113098],
+                      "match": true
+                    }
+                  ]
+                }
+              ];
+
+              for (const obj of data) {
+                if (obj.label === "identity_attack" && obj.results[0].match === true) {
+                  console.log("El objeto con 'label': 'identity_attack' contiene 'match: true'");
+                }
               }
-            ];
 
-            for (const obj of data) {
-              if (obj.label === "identity_attack" && obj.results[0].match === true) {
-                console.log("El objeto con 'label': 'identity_attack' contiene 'match: true'");
               }
-            }
-
-            }
-          )
-        },);
-      
+            )
+          },);
+        }
       
       </script>
     </div>
