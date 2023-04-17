@@ -31,8 +31,8 @@
 
           toxicity.load(threshold).then(model => {
             const sentences = ['you suck'];
-            console.log(predictions);
             model.classify(sentences).then(predictions => {
+              console.log(predictions);
               const data = [
                 {
                   "label": "identity_attack",
