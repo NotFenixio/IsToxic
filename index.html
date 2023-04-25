@@ -34,6 +34,8 @@
             const sentences = [message];
             model.classify(sentences).then(predictions => {
               console.log(predictions);
+              console.log("Hello");
+              setTimeout(() => {  console.log("World!"); }, 5000);
               }
             )
           },);
