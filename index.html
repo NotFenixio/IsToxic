@@ -27,44 +27,17 @@
       <button type="button" onclick="run()">Click Me!</button>
       <script>
         function run() {
+          const message = document.getElementById("message").value;
           const threshold = 0.9;
 
           toxicity.load(threshold).then(model => {
-            const sentences = ['you suck'];
+            const sentences = [message];
             model.classify(sentences).then(predictions => {
               console.log(predictions);
-              const data = [
-                {
-                  "label": "identity_attack",
-                  "results": [
-                    {
-                      "probabilities": [0.9659664034843445, 0.03403361141681671],
-                      "match": false
-                    }
-                  ]
-                },
-                {
-                  "label": "insult",
-                  "results": [
-                    {
-                      "probabilities": [0.08124706149101257, 0.9187529683113098],
-                      "match": true
-                    }
-                  ]
-                }
-              ];
-
-              for (const obj of data) {
-                if (obj.label === "identity_attack" && obj.results[0].match === true) {
-                  console.log("1!!!!!1!11!1!");
-                }
-              }
-
               }
             )
           },);
         }
-      
       </script>
     </div>
   </main>
